@@ -10,8 +10,24 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      es: { translation: es },
-      en: { translation: en },
+      es: {
+        translation: {
+          ...es,
+          menu: {
+            dashboard: 'Panel',
+            payments: 'Pagos',
+          },
+        },
+      },
+      en: {
+        translation: {
+          ...en,
+          menu: {
+            dashboard: 'Dashboard',
+            payments: 'Payments',
+          },
+        },
+      },
     },
     fallbackLng: 'es',
     interpolation: {

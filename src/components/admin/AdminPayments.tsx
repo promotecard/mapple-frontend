@@ -1,63 +1,71 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
+import { useTranslation } from 'react-i18next'
+import DashboardLayout from '../layout/DashboardLayout'
 
 type Payment = {
   id: string
+  parent_name: string
   concept: string
   total_amount: number
   due_date: string
-  status: string
+  status: 'pending' | 'paid' | 'overdue'
 }
 
 export default function AdminPayments() {
-  const { profile } = useAuth()
+  const { t } = useTranslation()
   const [payments, setPayments] = useState<Payment[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const load = async () => {
-      const session = JSON.parse(
-        localStorage.getItem('sb-auth-token') || '{}'
-      )
-
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/admin/payments`,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-        }
-      )
-
-      const data = await res.json()
-      setPayments(data)
-      setLoading(false)
+    const loadPayments = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/payments/admin`
+        )
+        const data = await res.json()
+        setPayments(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }
 
-    load()
+    loadPayments()
   }, [])
 
-  if (loading) return <p>Cargando pagos…</p>
+  if (loading) {
+    return <DashboardLayout>{t('common.loading')}</DashboardLayout>
+  }
 
   return (
-    <div style={{ padding: 24 }}>
-      <h2>Pagos de la escuela</h2>
+    <DashboardLayout>
+      <h1>{t('admin.paymentsTitle')}</h1>
 
-      {payments.map((p) => (
-        <div
-          key={p.id}
-          style={{
-            border: '1px solid #e5e7eb',
-            padding: 12,
-            marginBottom: 8,
-          }}
-        >
-          <p><strong>{p.concept}</strong></p>
-          <p>Monto: USD {p.total_amount}</p>
-          <p>Vence: {p.due_date}</p>
-          <p>Estado: {p.status}</p>
-        </div>
-      ))}
-    </div>
+      <table style={{ width: '100%', marginTop: 16, borderCollapse: 'collapse' }}>
+        <thead>
+          <tr>
+            <th>{t('payments.parent')}</th>
+            <th>{t('payments.concept')}</th>
+            <th>{t('payments.amount')}</th>
+            <th>{t('payments.dueDate')}</th>
+            <th>{t('payments.status')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payments.map((p) => (
+            <tr key={p.id}>
+              <td>{p.parent_name}</td>
+              <td>{p.concept}</td>
+              <td>USD {p.total_amount}</td>
+              <td>{p.due_date}</td>
+              <td>
+                <strong>{t(`status.${p.status}`)}</strong>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </DashboardLayout>
   )
 }

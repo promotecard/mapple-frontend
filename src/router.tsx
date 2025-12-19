@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/auth/Login'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import AdminPayments from './components/admin/AdminPayments'
+import DashboardLayout from './components/layout/DashboardLayout'
+
 
 function AdminDashboard() {
   return <div>Panel Administrador</div>
@@ -67,7 +69,14 @@ export default function AppRouter() {
         <Route
           path="/parent"
           element={
-            <ProtectedRoute allowedRoles={['parent']}>
+         
+<ProtectedRoute allowedRoles={['parent']}>
+  <DashboardLayout>
+    <ParentDashboard />
+  </DashboardLayout>
+</ProtectedRoute>
+
+   <ProtectedRoute allowedRoles={['parent']}>
               <ParentDashboard />
             </ProtectedRoute>
           }
