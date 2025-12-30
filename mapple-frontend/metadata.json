@@ -1,0 +1,7 @@
+{
+  "name": "Mapple School - School Management Platform",
+  "description": "An MVP for a school platform to manage colleges, activities with payments, communication, and suppliers. It includes role-based dashboards for global admins, school staff, and parents.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

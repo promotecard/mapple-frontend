@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapple School - School Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'display': ['"Nunito"', 'sans-serif'],
+              'body': ['"Inter"', 'sans-serif'],
+              'hand': ['"Baloo 2"', 'cursive'],
+            },
+            colors: {
+              // Brand Palette (Legacy)
+              'rojo-apple': '#FF3B30',
+              'verde-maple': '#34C759',
+              'azul-claro': '#007AFF',
+              
+              // Playful Modern Palette
+              'electric-blue': '#4D7CFE',
+              'fresh-mint': '#00D2A0',
+              'mango-yellow': '#FFC947',
+              'soft-coral': '#FF8585',
+              'lavender': '#9D8DF1',
+              'bone-white': '#FFFFFF',
+              'cloud-gray': '#F4F6F9',
+
+              // Semantic Mapping
+              primary: {
+                DEFAULT: '#4D7CFE', // Soft Electric Blue
+                hover: '#3b6bf6',
+                light: '#EBF2FF',
+              },
+              secondary: {
+                DEFAULT: '#F4F6F9', // Cloud Gray
+                hover: '#E5E9F0',
+                text: '#64748B',
+              },
+              accent: {
+                green: '#00D2A0', // Fresh Mint
+                red: '#FF8585',   // Soft Coral
+                yellow: '#FFC947', // Mango Yellow
+                purple: '#9D8DF1', // Lavender
+              },
+              background: '#F4F6F9',
+              surface: '#FFFFFF',
+              text: {
+                primary: '#1E293B', // Slate 800
+                secondary: '#64748B', // Slate 500
+                contrast: '#FFFFFF',
+              },
+              border: '#E2E8F0',
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+              'soft-hover': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "i18next": "https://esm.sh/i18next@23.11.5",
+    "react-i18next": "https://esm.sh/react-i18next@14.1.2?external=react,react-dom,i18next",
+    "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@8.0.0?external=i18next",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "helmet": "https://aistudiocdn.com/helmet@^8.1.0",
+    "url": "https://aistudiocdn.com/url@^0.11.4",
+    "express": "https://aistudiocdn.com/express@^5.2.1",
+    "compression": "https://aistudiocdn.com/compression@^1.8.1",
+    "morgan": "https://aistudiocdn.com/morgan@^1.10.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-background font-body text-text-primary antialiased">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

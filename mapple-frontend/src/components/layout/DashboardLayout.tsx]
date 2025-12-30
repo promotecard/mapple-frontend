@@ -1,0 +1,55 @@
+ardLayout({ children }: Props) {
+  const { t } = useTranslation()
+ import { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useAuth } from '../../context/AuthContext'
+import Sidebar from './Sidebar'
+import LanguageSwitcher from '../ui/LanguageSwitcher'
+
+type Props = {
+  children: ReactNode
+}
+
+export default function DashboardLayout({ children }: Props) {
+  const { t } = useTranslation()
+  const { logout } = useAuth()
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main content */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        {/* Top bar */}
+        <header
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '12px 24px',
+            borderBottom: '1px solid #e5e7eb',
+            background: '#ffffff',
+          }}
+        >
+          <h2 style={{ margin: 0 }}>
+            {t('app.name')}
+          </h2>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <LanguageSwitcher />
+            <button onClick={logout}>
+              {t('common.logout')}
+            </button>
+          </div>
+        </header>
+
+        {/* Page content */}
+        <main style={{ flex: 1, padding: 24 }}>
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}
+
