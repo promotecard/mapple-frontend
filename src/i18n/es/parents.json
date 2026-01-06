@@ -1,0 +1,9 @@
+{
+  "create": {
+    "title": "Crear padre",
+    "successTitle": "Padre creado exitosamente",
+    "successMessage": "La cuenta del padre fue creada correctamente.",
+    "emailLabel": "Correo electrónico",
+    "temporaryPassword": "Contraseña temporal"
+  }
+}

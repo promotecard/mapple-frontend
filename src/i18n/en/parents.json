@@ -1,0 +1,9 @@
+{
+  "create": {
+    "title": "Create parent",
+    "successTitle": "Parent created successfully",
+    "successMessage": "The parent account was created successfully.",
+    "emailLabel": "Email",
+    "temporaryPassword": "Temporary password"
+  }
+}

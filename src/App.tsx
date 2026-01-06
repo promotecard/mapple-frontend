@@ -1,13 +1,10 @@
-
-import { AuthProvider } from './context/AuthContext'
-import AppRouter from './router'
-
 function App() {
   return (
-    <AuthProvider>
-      <AppRouter />
-    </AuthProvider>
-  )
+    <div style={{ padding: 40 }}>
+      <h1>App renderiza correctamente ✅</h1>
+    </div>
+  );
 }
 
-export default App
+export default App;
+

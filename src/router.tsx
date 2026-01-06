@@ -1,90 +1,33 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Login from './components/auth/Login'
-import ProtectedRoute from './components/auth/ProtectedRoute'
-import AdminPayments from './components/admin/AdminPayments'
-import DashboardLayout from './components/layout/DashboardLayout'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Login } from "./components/components/auth/Login";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { LandingPage } from "./components/landing/LandingPage";
+import { GlobalAdminDashboard } from "./components/components/dashboards/GlobalAdminDashboard";
 
 
-function AdminDashboard() {
-  return <div>Panel Administrador</div>
-}
-
-function ParentDashboard() {
-  return <div>Panel Padres</div>
-}
-
-export default function AppRouter() {
+const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
 
-<Route
-  path="/admin/payments"
-  element={
-    <ProtectedRoute allowedRoles={['school_admin']}>
-      <AdminPayments />
-    </ProtectedRoute>
-  }
-/>
-
-       <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={['school_admin']}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/parent"
-        import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Login from './components/auth/Login'
-import ProtectedRoute from './components/auth/ProtectedRoute'
-
-function AdminDashboard() {
-  return <div>Panel Administrador</div>
-}
-
-function ParentDashboard() {
-  return <div>Panel Padres</div>
-}
-
-export default function AppRouter() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-
+        {/* Protected routes */}
         <Route
           path="/admin"
           element={
-            <ProtectedRoute allowedRoles={['school_admin']}>
-              <AdminDashboard />
+            <ProtectedRoute>
+              <GlobalAdminDashboard />
             </ProtectedRoute>
           }
         />
 
-        <Route
-          path="/parent"
-          element={
-         
-<ProtectedRoute allowedRoles={['parent']}>
-  <DashboardLayout>
-    <ParentDashboard />
-  </DashboardLayout>
-</ProtectedRoute>
-
-   <ProtectedRoute allowedRoles={['parent']}>
-              <ParentDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Default */}
-        <Route path="*" element={<Navigate to="/login" />} />
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
+
+export default AppRouter;

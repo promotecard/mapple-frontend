@@ -1,77 +1,40 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
-import GlobalLoader from '../components/common/GlobalLoader'
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import type { User } from "../types";
 
-type UserProfile = {
-  id: string
-  email: string
-  role: 'school_admin' | 'parent' | 'teacher' | string
+interface AuthContextType {
+  user: User | null;
+  login: (user: User) => void;
+  logout: () => void;
 }
 
-type AuthContextType = {
-  loading: boolean
-  profile: UserProfile | null
-  logout: () => Promise<void>
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  loading: true,
-  profile: null,
-  logout: async () => {},
-})
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(true)
-  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const login = (userData: User) => {
+    setUser(userData);
+  };
 
-  useEffect(() => {
-    const loadSession = async () => {
-      const { data } = await supabase.auth.getSession()
-      const session = data.session
+  const logout = () => {
+    setUser(null);
+  };
 
-      if (!session) {
-        setLoading(false)
-        return
-      }
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        }
-      )
-
-      if (res.ok) {
-        const profile = await res.json()
-        setProfile(profile)
-      }
-
-      setLoading(false)
-    }
-
-    loadSession()
-  }, [])
-
-  const logout = async () => {
-    await supabase.auth.signOut()
-    setProfile(null)
-    window.location.href = '/'
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-
-if (loading) {
-  return <GlobalLoader />
-}
-
-
-
-return (
-  <AuthContext.Provider value={{ loading, profile, logout }}>
-    {loading ? <GlobalLoader /> : children}
-  </AuthContext.Provider>
-)
-)
-}
-
-export const useAuth = () => useContext(AuthContext)
+  return context;
+};
