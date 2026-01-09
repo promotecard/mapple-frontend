@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import type { EmailTemplate } from "../../types";
 import { EmailTemplateType } from "../../types";
 
@@ -21,6 +22,8 @@ export const EmailTemplateModal: React.FC<EmailTemplateModalProps> = ({
   template,
   onSave,
 }) => {
+  const { t } = useTranslation();
+
   const [subject, setSubject] = useState(template.subject);
   const [body, setBody] = useState(template.body);
 
@@ -39,27 +42,34 @@ export const EmailTemplateModal: React.FC<EmailTemplateModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Edit email template">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t("email.editTemplate")}
+      footer={
+        <div className="flex justify-end gap-2">
+          <Button variant="secondary" onClick={onClose}>
+            {t("actions.cancel")}
+          </Button>
+          <Button onClick={handleSave}>
+            {t("actions.save")}
+          </Button>
+        </div>
+      }
+    >
       <div className="space-y-4">
         <div>
-          <Label>Subject</Label>
+          <Label>{t("email.subject")}</Label>
           <Input value={subject} onChange={(e) => setSubject(e.target.value)} />
         </div>
 
         <div>
-          <Label>Body</Label>
+          <Label>{t("email.body")}</Label>
           <Textarea
             rows={6}
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
-        </div>
-
-        <div className="flex justify-end gap-2">
-          <Button variant="secondary" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleSave}>Save</Button>
         </div>
       </div>
     </Modal>

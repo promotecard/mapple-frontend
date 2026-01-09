@@ -1,15 +1,11 @@
-import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Outlet } from 'react-router-dom'
 import LanguageSwitcher from '../ui/LanguageSwitcher'
-import { useAuth } from '../../context/AuthContext'
+// import { useAuth } from '../../context/AuthContext'
 
-type Props = {
-  children: ReactNode
-}
-
-export default function DashboardLayout({ children }: Props) {
+export default function DashboardLayout() {
   const { t } = useTranslation()
-  const { logout } = useAuth()
+  // const { logout } = useAuth()
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
@@ -31,18 +27,20 @@ export default function DashboardLayout({ children }: Props) {
         <div style={{ marginTop: 'auto' }}>
           <LanguageSwitcher />
 
+          {/*
           <button
             style={{ marginTop: 12 }}
             onClick={logout}
           >
             {t('common.logout')}
           </button>
+          */}
         </div>
       </aside>
 
       {/* Contenido */}
       <main style={{ flex: 1, padding: 24 }}>
-        {children}
+        <Outlet />
       </main>
     </div>
   )

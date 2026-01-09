@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { SchoolCreationData, School, UserWithPassword } from '../../types';
@@ -71,7 +70,7 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
       setNewData({ school, admin });
       setView('success');
     } catch (err) {
-      setError('Failed to create school. Please try again.');
+      setError(t('errors.createSchool'));
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -99,7 +98,7 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
       );
 
       if (!credentialTemplate) {
-        alert('Credential email template not found.');
+        alert(t('errors.emailTemplateMissing'));
         return;
       }
 
@@ -125,7 +124,7 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
       });
       setIsEmailPreviewOpen(true);
     } catch {
-      alert('Failed to fetch email templates.');
+      alert(t('errors.emailTemplateFetch'));
     }
   };
 
@@ -133,14 +132,14 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title={t('Create New School')}
+      title={t('school.createTitle')}
       footer={
         <div className="space-x-2">
           <Button variant="secondary" onClick={handleClose}>
-            {t('Cancel')}
+            {t('actions.cancel')}
           </Button>
           <Button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? t('Creating...') : t('Create School')}
+            {isSubmitting ? t('actions.creating') : t('actions.create')}
           </Button>
         </div>
       }
@@ -150,19 +149,19 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label>School Name</Label>
+            <Label>{t('school.name')}</Label>
             <Input name="name" value={formData.name} onChange={handleChange} required />
           </div>
 
           <div>
-            <Label>RNC / Tax ID</Label>
+            <Label>{t('school.taxId')}</Label>
             <Input name="taxId" value={formData.taxId} onChange={handleChange} required />
           </div>
 
           <div>
-            <Label>Country</Label>
+            <Label>{t('school.country')}</Label>
             <Select name="country" value={formData.country} onChange={handleChange} required>
-              <option value="">Select a country</option>
+              <option value="">{t('actions.select')}</option>
               {countries.map(c => (
                 <option key={c} value={c}>
                   {c}
@@ -172,7 +171,7 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
           </div>
 
           <div>
-            <Label>City</Label>
+            <Label>{t('school.city')}</Label>
             <Select
               name="city"
               value={formData.city}
@@ -180,7 +179,7 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
               disabled={!formData.country}
               required
             >
-              <option value="">Select city</option>
+              <option value="">{t('actions.select')}</option>
               {(citiesByCountry[formData.country] || []).map(city => (
                 <option key={city} value={city}>
                   {city}
@@ -190,36 +189,31 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
           </div>
 
           <div className="md:col-span-2">
-            <Label>Address</Label>
+            <Label>{t('school.address')}</Label>
             <Input name="address" value={formData.address} onChange={handleChange} required />
           </div>
 
           <div>
-            <Label>Phone</Label>
+            <Label>{t('school.phone')}</Label>
             <Input name="phone" value={formData.phone} onChange={handleChange} required />
           </div>
 
           <div>
-            <Label>Email</Label>
+            <Label>{t('school.email')}</Label>
             <Input type="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
 
           <div>
-            <Label>Director Name</Label>
-            <Input
-              name="directorName"
-              value={formData.directorName}
-              onChange={handleChange}
-              required
-            />
+            <Label>{t('school.directorName')}</Label>
+            <Input name="directorName" value={formData.directorName} onChange={handleChange} required />
           </div>
 
           <div>
-            <Label>Status</Label>
+            <Label>{t('school.status')}</Label>
             <Select name="status" value={formData.status} onChange={handleChange}>
-              <option value={Status.Pending}>Pending</option>
-              <option value={Status.Active}>Active</option>
-              <option value={Status.Suspended}>Suspended</option>
+              <option value={Status.Pending}>{t('status.pending')}</option>
+              <option value={Status.Active}>{t('status.active')}</option>
+              <option value={Status.Suspended}>{t('status.suspended')}</option>
             </Select>
           </div>
         </div>
@@ -228,19 +222,24 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
   );
 
   const renderSuccess = () => (
-    <Modal isOpen={isOpen} onClose={handleClose} title="School Created" footer={<Button onClick={handleClose}>Finish</Button>}>
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title={t('school.createdTitle')}
+      footer={<Button onClick={handleClose}>{t('actions.finish')}</Button>}
+    >
       <div className="space-y-4">
         <p>
-          The school <strong>{newData?.school.name}</strong> was created successfully.
+          {t('school.createdSuccess', { name: newData?.school.name })}
         </p>
 
         <div>
-          <Label>Admin Email</Label>
+          <Label>{t('school.adminEmail')}</Label>
           <p className="bg-gray-100 p-2 rounded">{newData?.admin.email}</p>
         </div>
 
         <div>
-          <Label>Admin Password</Label>
+          <Label>{t('school.adminPassword')}</Label>
           <input
             readOnly
             type={showPassword ? 'text' : 'password'}
@@ -248,12 +247,12 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
             className="w-full p-2 border rounded"
           />
           <Button variant="secondary" onClick={() => setShowPassword(p => !p)}>
-            Toggle
+            {t('actions.toggle')}
           </Button>
         </div>
 
         <Button variant="secondary" onClick={handleSendEmail}>
-          Send Credentials Email
+          {t('actions.sendCredentials')}
         </Button>
       </div>
     </Modal>
@@ -267,16 +266,12 @@ export const CreateSchoolModal: React.FC<CreateSchoolModalProps> = ({
         <Modal
           isOpen={isEmailPreviewOpen}
           onClose={() => setIsEmailPreviewOpen(false)}
-          title="Email Preview"
-          footer={<Button onClick={() => setIsEmailPreviewOpen(false)}>Close</Button>}
+          title={t('email.previewTitle')}
+          footer={<Button onClick={() => setIsEmailPreviewOpen(false)}>{t('actions.close')}</Button>}
         >
           <div className="space-y-3">
-            <p>
-              <strong>To:</strong> {emailPreviewContent.to}
-            </p>
-            <p>
-              <strong>Subject:</strong> {emailPreviewContent.subject}
-            </p>
+            <p><strong>{t('email.to')}:</strong> {emailPreviewContent.to}</p>
+            <p><strong>{t('email.subject')}:</strong> {emailPreviewContent.subject}</p>
             <pre className="bg-gray-100 p-3 rounded whitespace-pre-wrap">
               {emailPreviewContent.body}
             </pre>

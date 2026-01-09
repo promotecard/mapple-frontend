@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { useAuth } from '../../context/AuthContext'
 
 type Props = {
-  allowedRoles: string[]
+  allowedRoles?: string[]
   children: ReactNode
 }
 
@@ -18,7 +18,7 @@ export default function ProtectedRoute({ allowedRoles, children }: Props) {
     return null
   }
 
-  if (!allowedRoles.includes(profile.role)) {
+  if (allowedRoles && !allowedRoles.includes(profile.role)) {
     return <div>No tienes permisos para acceder</div>
   }
 

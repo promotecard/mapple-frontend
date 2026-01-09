@@ -18,20 +18,30 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [permissions, setPermissions] = useState<(Permission | ProviderPermission)[]>([]);
-  const [landingPageConfig, setLandingPageConfig] = useState<LandingPageConfig | null>(null);
+const [landingPageConfig, setLandingPageConfig] =
+  useState<LandingPageConfig | null>({
+    logoHeaderUrl: null,
+    heroTitle: "Mapple School",
+    heroSubtitle: "Plataforma educativa todo-en-uno",
+    heroBannerUrl: null,
+  });
 
-  const fetchLandingPageConfig = useCallback(async () => {
-    try {
-        const config = await api.getLandingPageConfig();
-        setLandingPageConfig(config);
-    } catch (error) {
-        console.error("Failed to load landing page config:", error);
-    }
-  }, []);
+const fetchLandingPageConfig = useCallback(async () => {
+  console.log("🟡 fetchLandingPageConfig ejecutándose");
 
-  useEffect(() => {
-      fetchLandingPageConfig();
-  }, [fetchLandingPageConfig]);
+  try {
+    const config = await api.getLandingPageConfig();
+    console.log("🟢 Landing config recibido:", config);
+    setLandingPageConfig(config);
+  } catch (error) {
+    console.error("🔴 Error cargando landing config:", error);
+  }
+}, []);
+
+useEffect(() => {
+  console.log("🟣 AppProvider mounted");
+  fetchLandingPageConfig();
+}, [fetchLandingPageConfig]);
 
   const login = useCallback(async (email: string, password?: string) => {
     try {
@@ -69,6 +79,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, [login]);
+
+useEffect(() => {
+  setLandingPageConfig({
+    logoHeaderUrl: "",
+    heroTitle: "Mapple School",
+    heroSubtitle: "La plataforma que conecta padres, escuelas y estudiantes",
+    heroBannerUrl: ""
+  });
+}, []);
 
   const logout = () => {
     setCurrentUser(null);

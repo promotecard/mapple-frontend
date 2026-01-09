@@ -1,10 +1,5 @@
-function App() {
-  return (
-    <div style={{ padding: 40 }}>
-      <h1>App renderiza correctamente ✅</h1>
-    </div>
-  );
+import AppRouter from './router'
+
+export default function App() {
+  return <AppRouter />
 }
-
-export default App;
-
