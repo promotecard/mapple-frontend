@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
+import Sidebar from './Sidebar'
 
 export default function DashboardLayout() {
   const { t } = useTranslation()
@@ -12,16 +13,10 @@ export default function DashboardLayout() {
           background: '#f9fafb',
           padding: 16,
           borderRight: '1px solid #e5e7eb',
-          display: 'flex',
-          flexDirection: 'column',
         }}
       >
         <h2>{t('app.name')}</h2>
-
-        <div style={{ marginTop: 'auto', fontSize: 12, color: '#6b7280' }}>
-          {/* LanguageSwitcher se reintroduce en Sprint 1 */}
-          Mapple School
-        </div>
+        <Sidebar />
       </aside>
 
       <main style={{ flex: 1, padding: 24 }}>

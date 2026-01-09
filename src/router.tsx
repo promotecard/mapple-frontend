@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { LandingPage } from './components/landing/LandingPage'
 import Login from './modules/auth/Login'
 
+// Auth
+import RequireAuth from './modules/auth/RequireAuth'
+
 // App
 import DashboardLayout from './components/layout/DashboardLayout'
 import Dashboard from './modules/app/Dashboard'
@@ -16,9 +19,11 @@ export default function AppRouter() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
 
-        {/* App */}
-        <Route path="/app" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
+        {/* Protegido */}
+        <Route element={<RequireAuth />}>
+          <Route path="/app" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+          </Route>
         </Route>
 
         {/* Fallback */}
