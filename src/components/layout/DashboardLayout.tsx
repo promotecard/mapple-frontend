@@ -1,15 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
-import LanguageSwitcher from '../ui/LanguageSwitcher'
-// import { useAuth } from '../../context/AuthContext'
 
 export default function DashboardLayout() {
   const { t } = useTranslation()
-  // const { logout } = useAuth()
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Sidebar */}
       <aside
         style={{
           width: 240,
@@ -22,23 +18,12 @@ export default function DashboardLayout() {
       >
         <h2>{t('app.name')}</h2>
 
-        {/* Menú vendrá aquí */}
-
-        <div style={{ marginTop: 'auto' }}>
-          <LanguageSwitcher />
-
-          {/*
-          <button
-            style={{ marginTop: 12 }}
-            onClick={logout}
-          >
-            {t('common.logout')}
-          </button>
-          */}
+        <div style={{ marginTop: 'auto', fontSize: 12, color: '#6b7280' }}>
+          {/* LanguageSwitcher se reintroduce en Sprint 1 */}
+          Mapple School
         </div>
       </aside>
 
-      {/* Contenido */}
       <main style={{ flex: 1, padding: 24 }}>
         <Outlet />
       </main>
