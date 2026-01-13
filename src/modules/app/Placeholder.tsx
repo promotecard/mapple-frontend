@@ -1,6 +1,6 @@
 type Props = {
   title: string
-  description: string
+  description?: string
 }
 
 export default function Placeholder({ title, description }: Props) {
@@ -9,10 +9,12 @@ export default function Placeholder({ title, description }: Props) {
       <h1 style={{ fontSize: 20, fontWeight: 600 }}>
         {title}
       </h1>
-      <p style={{ marginTop: 8 }}>
-        {description}
-      </p>
+
+      {description && (
+        <p style={{ marginTop: 8 }}>
+          {description}
+        </p>
+      )}
     </div>
   )
 }
-

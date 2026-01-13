@@ -1,27 +1,31 @@
 import type { UserRole } from '../../modules/auth/roles'
 
-export interface MenuItem {
+export type MenuItem = {
   label: string
   path: string
 }
 
-export const menuByRole: Record<UserRole, MenuItem[]> = {
+export const menuConfig: Record<UserRole, MenuItem[]> = {
   GLOBAL_ADMIN: [
-    { label: 'Dashboard', path: '/app' },
     { label: 'Colegios', path: '/app/schools' },
     { label: 'Proveedores', path: '/app/providers' },
-    { label: 'Templates', path: '/app/templates' },
+    { label: 'Usuarios', path: '/app/users' },
+    { label: 'Plantillas', path: '/app/templates' },
   ],
+
   SCHOOL_ADMIN: [
     { label: 'Dashboard', path: '/app' },
-    { label: 'Padres', path: '/app/parents' },
+    { label: 'Usuarios', path: '/app/users' },
+    { label: 'Actividades', path: '/app/activities' },
     { label: 'Pagos', path: '/app/payments' },
-    { label: 'Comunicación', path: '/app/communications' },
+    { label: 'Comunicaciones', path: '/app/communications' },
   ],
+
   PARENT: [
     { label: 'Inicio', path: '/app' },
     { label: 'Dependientes', path: '/app/dependents' },
-    { label: 'Estado de Cuenta', path: '/app/account' },
+    { label: 'Actividades', path: '/app/activities' },
+    { label: 'Estado de cuenta', path: '/app/payments' },
     { label: 'Marketplace', path: '/app/marketplace' },
   ],
 }

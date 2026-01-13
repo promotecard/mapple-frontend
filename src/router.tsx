@@ -7,9 +7,14 @@ import Login from './modules/auth/Login'
 // Auth
 import RequireAuth from './modules/auth/RequireAuth'
 
-// App
+// Layout
 import DashboardLayout from './components/layout/DashboardLayout'
+
+// App
 import Dashboard from './modules/app/Dashboard'
+
+// Debug
+import VerifyContext from './modules/debug/VerifyContext'
 
 export default function AppRouter() {
   return (
@@ -18,6 +23,9 @@ export default function AppRouter() {
         {/* Público */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+
+        {/* Debug */}
+        <Route path="/debug" element={<VerifyContext />} />
 
         {/* Protegido */}
         <Route element={<RequireAuth />}>

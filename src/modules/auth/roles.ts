@@ -1,2 +1,3 @@
-export type UserRole = 'GLOBAL_ADMIN' | 'SCHOOL_ADMIN' | 'PARENT'
+export type UserRole = 'global_admin' | 'school_admin' | 'parent'
+
 
